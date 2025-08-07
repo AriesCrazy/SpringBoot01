@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.OoMasterDao">
+    <resultMap type="com.by.entity.OoMaster" id="OoMasterMap">
+        <result property="id" column="id" />
+        <result property="brief" column="brief" />
+        <result property="ooDate" column="ooDate" />
+        <result property="deliverer" column="deliverer" />
+        <result property="lastUpdateBy" column="lastUpdateBy" />
+        <result property="lastUpdateTime" column="lastUpdateTime" />
+    </resultMap>
+    
+    
+    <!--通用查询-->
+    <select id="select" resultMap="OoMasterMap">
+        select
+        id,brief,ooDate,deliverer,lastUpdateBy,lastUpdateTime
+        from oo_master
+        <where>
+            <if test="id != null and id != ''">
+                and id like concat('%',#{id},'%')
+            </if>
+            <if test="ooDate != null and ooDate != ''">
+                and ooDate = #{ooDate}
+            </if>
+        </where>
+    </select>
+    
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oo_master(id,brief,ooDate,deliverer,lastUpdateBy)
+        values (#{id},#{brief},#{ooDate},#{deliverer},#{lastUpdateBy})
+    </insert>
+    
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into oo_master(id,brief,ooDate,deliverer,lastUpdateBy)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id},#{entity.brief},#{entity.ooDate},#{entity.deliverer},#{entity.lastUpdateBy})
+        </foreach>
+    </insert>
+    
+    <!-- 更新数据 -->
+    <update id="update">
+        update oo_master
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="brief != null and brief != ''">
+                brief = #{brief},
+            </if>
+            <if test="ooDate != null and ooDate != ''">
+                ooDate = #{ooDate},
+            </if>
+            <if test="deliverer != null and deliverer != ''">
+                deliverer = #{deliverer},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                lastUpdateTime = #{lastUpdateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <!--通过主键软删除-->
+    <update id="delete">
+        update  oo_master set status = 0 where id = #{id}
+    </update>
+</mapper>

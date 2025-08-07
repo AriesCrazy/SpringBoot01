@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.InventoryDao">
+    <resultMap type="com.by.entity.Inventory" id="InventoryMap">
+        <result property="id" column="id" />
+        <result property="productName" column="productName" />
+        <result property="qty" column="qty" />
+        <result property="saleCount" column="saleCount" />
+        <result property="version" column="version" />
+        <result property="lastUpdateBy" column="lastUpdateBy" />
+        <result property="lastUpdateTime" column="lastUpdateTime" />
+    </resultMap>
+    
+    
+    <!--通用查询-->
+    <select id="select" resultMap="InventoryMap">
+        select
+            id,productName,qty,saleCount,version,lastUpdateBy,lastUpdateTime
+        from inventory
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="productName != null and productName != ''">
+                and productName like concat('%',#{productName},'%')
+            </if>
+        </where>
+    </select>
+    
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into inventory(id,productName,qty,saleCount,version,lastUpdateBy,lastUpdateTime)
+        values (#{id},#{productName},#{qty},#{saleCount},#{version},#{lastUpdateBy},#{lastUpdateTime})
+    </insert>
+    
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into inventory(id,productName,qty,saleCount,version,lastUpdateBy,lastUpdateTime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id},#{entity.productName},#{entity.qty},#{entity.saleCount},#{entity.version},#{entity.lastUpdateBy},#{entity.lastUpdateTime})
+        </foreach>
+    </insert>
+    
+    <!-- 更新数据 -->
+    <update id="update">
+        update inventory
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="productName != null and productName != ''">
+                productName = #{productName},
+            </if>
+            <if test="qty != null and qty != ''">
+                qty = #{qty},
+            </if>
+            <if test="saleCount != null and saleCount != ''">
+                saleCount = #{saleCount},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                lastUpdateTime = #{lastUpdateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <!--通过主键软删除-->
+    <update id="delete">
+        update  inventory set status = 0 where id = #{id}
+    </update>
+</mapper>

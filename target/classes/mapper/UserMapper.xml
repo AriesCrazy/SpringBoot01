@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.by.dao.UserDao">
+    <resultMap id="resultMap" type="user">
+        <id column="id" property="id"/>
+        <result column="tel" property="tel"/>
+        <result column="email" property="email"/>
+        <result column="password" property="password"/>
+        <result column="nickName" property="nickName"/>
+        <result column="lastUpdateTime" property="lastUpdateTime"/>
+        <result column="lastUpdateBy" property="lastUpdateBy"/>
+        <collection property="roles" ofType="com.by.entity.Roles">
+            <id column="roleId" property="id"/>
+            <result column="roleName" property="name"/>
+            <result column="roleDescription" property="description"/>
+        </collection>
+        <collection property="permissions" ofType="com.by.entity.Permissions">
+            <id column="permissionId" property="id"/>
+            <result column="permissionName" property="name"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert">
+        insert into user (tel, email, password, nickName, lastUpdateBy)
+        VALUES (#{tel}, #{email}, #{password}, #{nickName}, #{lastUpdateBy})
+    </insert>
+    <insert id="insertUserRoles">
+        INSERT INTO user_roles (user_id, role_id)
+        VALUES
+        <foreach collection="roleids" item="roleId" separator=",">
+            (#{id}, #{roleId})
+        </foreach>
+    </insert>
+
+    <update id="updateInfo">
+        update user
+        <set>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nickName = #{nickName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserRoles">
+        DELETE FROM user_roles WHERE user_id = #{id}
+    </delete>
+
+    <delete id="delete1">
+        DELETE FROM user_roles WHERE user_id = #{id}
+    </delete>
+
+    <delete id="delete2">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+
+
+    <select id="login" resultMap="resultMap">
+        SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName
+        FROM user u
+                 left join user_roles ur on u.id = ur.user_id
+                 left join roles r on ur.role_id = r.id
+                 left join role_permissions rp on rp.role_id = r.id
+                 left join permissions p on rp.permission_id = p.id
+        WHERE u.tel = #{tel}
+          AND u.password = #{password}
+    </select>
+    <select id="check" resultMap="resultMap">
+        SELECT *
+        FROM user
+        WHERE tel = #{tel} limit 1
+    </select>
+
+
+    <select id="select" resultMap="resultMap">
+        SELECT u.*, r.id as roleId, r.name as roleName,r.description as roleDescription, p.id as permissionId, p.name as permissionName
+        FROM user u
+        left join user_roles ur on u.id = ur.user_id
+        left join roles r on ur.role_id = r.id
+        left join role_permissions rp on rp.role_id = r.id
+        left join permissions p on rp.permission_id = p.id
+        <where>
+            <if test="id != null and id != ''">
+                and u.id = #{id}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and u.nickName like concat('%',#{nickName},'%')
+            </if>
+            <if test="tel != null and tel != ''">
+                and u.tel like concat('%',#{tel},'%')
+            </if>
+            <if test="email != null and email != ''">
+                and u.email like concat('%',#{email},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="loginById"  resultMap="resultMap">
+        SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName
+        FROM user u
+                 left join user_roles ur on u.id = ur.user_id
+                 left join roles r on ur.role_id = r.id
+                 left join role_permissions rp on rp.role_id = r.id
+                 left join permissions p on rp.permission_id = p.id
+        WHERE u.id = #{id}
+    </select>
+</mapper>
