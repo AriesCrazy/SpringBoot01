@@ -1,0 +1,46 @@
+order.service [2025-08-05 08:53:01,946] INFO [main] [] com.by.App [StartupInfoLogger.java:55] Starting App on DESKTOP-NNDMV51 with PID 17240 (F:\JAVA\aaabeiyou\Code\SpringBoot\SpringBoot01\target\classes started by Aries in F:\JAVA\aaabeiyou\Code\SpringBoot\SpringBoot01)
+order.service [2025-08-05 08:53:01,952] DEBUG [main] [] com.by.App [StartupInfoLogger.java:56] Running with Spring Boot v2.3.12.RELEASE, Spring v5.2.15.RELEASE
+order.service [2025-08-05 08:53:01,952] INFO [main] [] com.by.App [SpringApplication.java:648] No active profile set, falling back to default profiles: default
+order.service [2025-08-05 08:53:05,854] INFO [main] [] com.by.App [StartupInfoLogger.java:61] Started App in 4.286 seconds (JVM running for 5.132)
+order.service [2025-08-05 08:53:05,856] DEBUG [main] [] com.by.App [App.java:36] Spring Boot Application 开始运行...
+order.service [2025-08-05 08:53:05,856] ERROR [main] [] com.by.App [App.java:39] 我是error
+order.service [2025-08-05 08:53:05,856] WARN [main] [] com.by.App [App.java:40] 我是warn
+order.service [2025-08-05 08:53:05,856] INFO [main] [] com.by.App [App.java:41] 我是info
+order.service [2025-08-05 08:53:05,857] DEBUG [main] [] com.by.App [App.java:42] 我是debug
+order.service [2025-08-05 08:53:16,551] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 08:53:16,568] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 08:53:16,618] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 08:53:17,173] DEBUG [http-nio-8080-exec-1] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：706 ms
+order.service [2025-08-05 08:53:20,050] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 08:53:20,050] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 08:53:20,052] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 08:53:20,055] DEBUG [http-nio-8080-exec-2] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：6 ms
+order.service [2025-08-05 08:53:24,394] DEBUG [http-nio-8080-exec-3] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 08:53:24,395] DEBUG [http-nio-8080-exec-3] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 08:53:24,396] DEBUG [http-nio-8080-exec-3] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 08:53:24,398] DEBUG [http-nio-8080-exec-3] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：5 ms
+order.service [2025-08-05 08:53:31,363] DEBUG [http-nio-8080-exec-4] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 08:53:31,364] DEBUG [http-nio-8080-exec-4] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 08:53:31,367] DEBUG [http-nio-8080-exec-4] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 08:53:31,368] DEBUG [http-nio-8080-exec-4] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：6 ms
+order.service [2025-08-05 08:53:39,840] DEBUG [http-nio-8080-exec-5] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 08:53:39,840] DEBUG [http-nio-8080-exec-5] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 08:53:39,842] DEBUG [http-nio-8080-exec-5] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 08:53:39,844] DEBUG [http-nio-8080-exec-5] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：5 ms
+order.service [2025-08-05 09:14:53,819] INFO [main] [] com.by.App [StartupInfoLogger.java:55] Starting App on DESKTOP-NNDMV51 with PID 7564 (F:\JAVA\aaabeiyou\Code\SpringBoot\SpringBoot01\target\classes started by Aries in F:\JAVA\aaabeiyou\Code\SpringBoot\SpringBoot01)
+order.service [2025-08-05 09:14:53,822] DEBUG [main] [] com.by.App [StartupInfoLogger.java:56] Running with Spring Boot v2.3.12.RELEASE, Spring v5.2.15.RELEASE
+order.service [2025-08-05 09:14:53,823] INFO [main] [] com.by.App [SpringApplication.java:648] No active profile set, falling back to default profiles: default
+order.service [2025-08-05 09:14:57,319] INFO [main] [] com.by.App [StartupInfoLogger.java:61] Started App in 3.858 seconds (JVM running for 4.829)
+order.service [2025-08-05 09:14:57,321] DEBUG [main] [] com.by.App [App.java:36] Spring Boot Application 开始运行...
+order.service [2025-08-05 09:14:57,321] ERROR [main] [] com.by.App [App.java:39] 我是error
+order.service [2025-08-05 09:14:57,322] WARN [main] [] com.by.App [App.java:40] 我是warn
+order.service [2025-08-05 09:14:57,322] INFO [main] [] com.by.App [App.java:41] 我是info
+order.service [2025-08-05 09:14:57,322] DEBUG [main] [] com.by.App [App.java:42] 我是debug
+order.service [2025-08-05 09:15:02,255] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 09:15:02,269] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 09:15:02,289] DEBUG [http-nio-8080-exec-1] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 09:15:02,757] DEBUG [http-nio-8080-exec-1] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：578 ms
+order.service [2025-08-05 09:15:09,537] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==>  Preparing: SELECT u.*, r.id as roleId, r.name as roleName, p.id as permissionId, p.name as permissionName FROM user u left join user_roles ur on u.id = ur.user_id left join roles r on ur.role_id = r.id left join role_permissions rp on rp.role_id = r.id left join permissions p on rp.permission_id = p.id WHERE u.tel = ? AND u.password = ?
+order.service [2025-08-05 09:15:09,539] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] ==> Parameters: 15639825979(String), A0A475CF454CF9A06979034098167B9E(String)
+order.service [2025-08-05 09:15:09,542] DEBUG [http-nio-8080-exec-2] [] com.by.dao.UserDao.login [BaseJdbcLogger.java:135] <==      Total: 4
+order.service [2025-08-05 09:15:09,545] DEBUG [http-nio-8080-exec-2] [] com.by.servlet.LogFilter [LogFilter.java:21] /api/user/login 请求耗时：9 ms

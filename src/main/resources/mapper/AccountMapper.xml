@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.by.dao.AccountDao">
+    <resultMap id="accountResultMap" type="Account">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="money" property="money"/>
+    </resultMap>
+    <update id="addMoney">
+        UPDATE account
+        SET money = money + #{money1}
+        WHERE id = #{id}
+    </update>
+
+    <update id="minusMoney">
+        update account
+        set money = money - #{money1}
+        where id = #{id}
+    </update>
+
+    <select id="select" resultMap="accountResultMap">
+        SELECT *
+        FROM account
+    </select>
+</mapper>

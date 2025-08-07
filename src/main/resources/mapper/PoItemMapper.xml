@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.PoItemDao">
+    <resultMap type="com.by.entity.PoItem" id="PoItemMap">
+        <result property="id" column="id"/>
+        <result property="poId" column="poId"/>
+        <result property="productId" column="productId"/>
+        <result property="productName" column="productName"/>
+        <result property="img" column="img"/>
+        <result property="qty" column="qty"/>
+        <result property="price" column="price"/>
+        <result property="brief" column="brief"/>
+        <result property="lastUpdateBy" column="lastUpdateBy"/>
+        <result property="lastUpdateTime" column="lastUpdateTime"/>
+    </resultMap>
+
+
+    <!--通用查询-->
+    <select id="select" resultMap="PoItemMap">
+        select
+        id,poId,productId,productName,img,qty,price,brief,lastUpdateBy,lastUpdateTime
+        from po_item
+        <where>
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="poId != null and poId != ''">
+                and poId = #{poId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into po_item(poId, productId, productName, img, qty, price, brief, lastUpdateBy)
+        values (#{poId}, #{productId}, #{productName}, #{img}, #{qty}, #{price}, #{brief}, #{lastUpdateBy})
+    </insert>
+
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into po_item(poId,productId,productName,img,qty,price,brief,lastUpdateBy)
+        values
+        <foreach collection="poItems" item="entity" separator=",">
+            (#{entity.poId},#{entity.productId},#{entity.productName},#{entity.img},#{entity.qty},#{entity.price},#{entity.brief},#{entity.lastUpdateBy})
+        </foreach>
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update">
+        update po_item
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="poId != null and poId != ''">
+                poId = #{poId},
+            </if>
+            <if test="productId != null and productId != ''">
+                productId = #{productId},
+            </if>
+            <if test="productName != null and productName != ''">
+                productName = #{productName},
+            </if>
+            <if test="qty != null and qty != ''">
+                qty = #{qty},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price},
+            </if>
+            <if test="brief != null and brief != ''">
+                brief = #{brief},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                lastUpdateTime = #{lastUpdateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键软删除-->
+    <update id="delete">
+        update po_item
+        set status = 20
+        where id = #{id}
+    </update>
+</mapper>

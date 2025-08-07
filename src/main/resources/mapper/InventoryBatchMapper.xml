@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.InventoryBatchDao">
+    <resultMap type="com.by.entity.InventoryBatch" id="InventoryBatchMap">
+        <result property="id" column="id" />
+        <result property="batchId" column="batchId" />
+        <result property="productId" column="productId" />
+        <result property="productName" column="productName" />
+        <result property="qty" column="qty" />
+        <result property="shelfId" column="shelfId" />
+        <result property="productionDate" column="productionDate" />
+        <result property="shelfLife" column="shelfLife" />
+        <result property="expiryDate" column="expiryDate" />
+        <result property="brief" column="brief" />
+        <result property="lastUpdateBy" column="lastUpdateBy" />
+        <result property="lastUpdateTime" column="lastUpdateTime" />
+    </resultMap>
+    
+    
+    <!--通用查询-->
+    <select id="select" resultMap="InventoryBatchMap">
+        select
+            id,batchId,productId,productName,qty,shelfId,productionDate,shelfLife,expiryDate,brief,lastUpdateBy,lastUpdateTime
+        from inventory_batch
+        <where>
+            <if test="batchId != null and batchId != ''">
+                and batchId = #{batchId}
+            </if>
+            <if test="productId != null and productId != ''">
+                and productId = #{productId}
+            </if>
+
+            <if test="shelfId != null and shelfId != ''">
+                and shelfId = #{shelfId}
+            </if>
+        </where>
+    </select>
+    
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into inventory_batch(id,batchId,productId,productName,qty,shelfId,productionDate,shelfLife,expiryDate,brief,lastUpdateBy,lastUpdateTime)
+        values (#{id},#{batchId},#{productId},#{productName},#{qty},#{shelfId},#{productionDate},#{shelfLife},#{expiryDate},#{brief},#{lastUpdateBy},#{lastUpdateTime})
+    </insert>
+    
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into inventory_batch(id,batchId,productId,productName,qty,shelfId,productionDate,shelfLife,expiryDate,brief,lastUpdateBy,lastUpdateTime)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id},#{entity.batchId},#{entity.productId},#{entity.productName},#{entity.qty},#{entity.shelfId},#{entity.productionDate},#{entity.shelfLife},#{entity.expiryDate},#{entity.brief},#{entity.lastUpdateBy},#{entity.lastUpdateTime})
+        </foreach>
+    </insert>
+    
+    <!-- 更新数据 -->
+    <update id="update">
+        update inventory_batch
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="batchId != null and batchId != ''">
+                batchId = #{batchId},
+            </if>
+            <if test="productId != null and productId != ''">
+                productId = #{productId},
+            </if>
+            <if test="productName != null and productName != ''">
+                productName = #{productName},
+            </if>
+            <if test="qty != null and qty != ''">
+                qty = #{qty},
+            </if>
+            <if test="shelfId != null and shelfId != ''">
+                shelfId = #{shelfId},
+            </if>
+            <if test="productionDate != null and productionDate != ''">
+                productionDate = #{productionDate},
+            </if>
+            <if test="shelfLife != null and shelfLife != ''">
+                shelfLife = #{shelfLife},
+            </if>
+            <if test="expiryDate != null and expiryDate != ''">
+                expiryDate = #{expiryDate},
+            </if>
+            <if test="brief != null and brief != ''">
+                brief = #{brief},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                lastUpdateTime = #{lastUpdateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <!--通过主键软删除-->
+    <update id="delete">
+        update  inventory_batch set status = 0 where id = #{id}
+    </update>
+</mapper>

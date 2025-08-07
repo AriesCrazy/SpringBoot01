@@ -1,0 +1,15 @@
+package com.by.config;
+
+import com.by.websocket.MyWebSocketHandler;
+import org.springframework.context.annotation.Configuration;
+
+
+@Configuration
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
+        //注册WebSocket处理器,并指定路径
+        webSocketHandlerRegistry.addHandler(new MyWebSocketHandler(),"/ws").setAllowedOrigins("*");
+    }
+}

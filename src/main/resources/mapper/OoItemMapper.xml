@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.OoItemDao">
+    <resultMap type="com.by.entity.OoItem" id="OoItemMap">
+        <result property="id" column="id" />
+        <result property="ooId" column="ooId" />
+        <result property="productId" column="productId" />
+        <result property="productName" column="productName" />
+        <result property="qty" column="qty" />
+        <result property="brief" column="brief" />
+        <result property="lastUpdateTime" column="lastUpdateTime" />
+        <result property="lastUpdateBy" column="lastUpdateBy" />
+    </resultMap>
+    
+    
+    <!--通用查询-->
+    <select id="select" resultMap="OoItemMap">
+        select
+            id,ooId,productId,productName,qty,brief,lastUpdateTime,lastUpdateBy
+        from oo_item
+        <where>
+
+            <if test="ooId != null and ooId != ''">
+                and ooId = #{ooId}
+            </if>
+
+        </where>
+    </select>
+    
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oo_item(id,ooId,productId,productName,qty,brief,lastUpdateBy)
+        values (#{id},#{ooId},#{productId},#{productName},#{qty},#{brief},#{lastUpdateBy})
+    </insert>
+    
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into oo_item(id,ooId,productId,productName,qty,brief,lastUpdateBy)
+        values
+        <foreach collection="ooItems" item="entity" separator=",">
+            (#{entity.id},#{entity.ooId},#{entity.productId},#{entity.productName},#{entity.qty},#{entity.brief},#{entity.lastUpdateBy})
+        </foreach>
+    </insert>
+    
+    <!-- 更新数据 -->
+    <update id="update">
+        update oo_item
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="ooId != null and ooId != ''">
+                ooId = #{ooId},
+            </if>
+            <if test="productId != null and productId != ''">
+                productId = #{productId},
+            </if>
+            <if test="productName != null and productName != ''">
+                productName = #{productName},
+            </if>
+            <if test="qty != null and qty != ''">
+                qty = #{qty},
+            </if>
+            <if test="brief != null and brief != ''">
+                brief = #{brief},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                lastUpdateTime = #{lastUpdateTime},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    
+    <!--通过主键软删除-->
+    <update id="delete">
+        update  oo_item set status = 0 where id = #{id}
+    </update>
+</mapper>

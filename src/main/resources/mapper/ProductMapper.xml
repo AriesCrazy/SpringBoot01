@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.by.dao.ProductDao">
+    <insert id="insert">
+        insert into product (name, subName, status, brief, img, tags, categoryId, seq, lastUpdateBy)
+        values (#{name},
+                #{subName},
+                #{status},
+                #{brief},
+                #{img,typeHandler=com.by.typehandler.JsonTypeHandler},
+                #{tags,typeHandler=com.by.typehandler.JsonTypeHandler},
+                #{categoryId},
+                #{seq},
+                #{lastUpdateBy})
+    </insert>
+    <update id="update">
+        update product
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="subName != null">
+                subName = #{subName},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="brief != null">
+                brief = #{brief},
+            </if>
+            <if test="img != null">
+                img = #{img,typeHandler=com.by.typehandler.JsonTypeHandler},
+            </if>
+            <if test="tags != null">
+                tags = #{tags,typeHandler=com.by.typehandler.JsonTypeHandler},
+            </if>
+            <if test="categoryId != null">
+                categoryId = #{categoryId},
+            </if>
+            <if test="seq != null">
+                seq = #{seq},
+            </if>
+            <if test="lastUpdateBy != null">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateStatus">
+        update product set status = #{status}
+        where id = #{id}
+    </update>
+    <select id="select" resultMap="productResultMap">
+        select * from product
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids != null">
+                and id in
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and categoryId = #{categoryId}
+            </if>
+        </where>
+        order by id
+    </select>
+    <resultMap id="productResultMap" type="Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="subName" property="subName"/>
+        <result column="status" property="status"/>
+        <result column="brief" property="brief"/>
+        <result column="img" property="img" typeHandler="com.by.typehandler.JsonTypeHandler"/>
+        <result column="tags" property="tags" typeHandler="com.by.typehandler.JsonTypeHandler"/>
+        <result column="categoryId" property="categoryId"/>
+        <result column="seq" property="seq"/>
+        <result column="lastUpdateBy" property="lastUpdateBy"/>
+        <result column="lastUpdateTime" property="lastUpdateTime"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,35 @@
+package .service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import .entity.IoItem;
+import .dao.IoItemDao;
+import .service.IoItemService;
+ /**
+ * ;(io_item)表服务实现类
+ * @author : heimi
+ * @date : 2025-6-18
+ */
+@Service
+public class IoItemService{
+     
+    @Autowired
+    private IoItemDao ioItemDao;
+    
+    public List<IoItem> select(IoItemQuery query) {
+        return ioItemDao.select(query);
+    }
+    
+    public Integer insert(IoItem ioItem) {
+        return ioItemDao.insert(ioItem);
+    }
+    
+    public Integer update(IoItem ioItem) {
+        return ioItemDao.update(ioItem);
+    }
+    
+    public Integer delete(Integer id) {
+        return ioItemDao.delete(id);
+    }
+    
+}

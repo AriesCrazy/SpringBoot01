@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.by.dao.CategoryDao">
+    <resultMap type="com.by.entity.Category" id="CategoryMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parentId"/>
+        <result property="img" column="img"/>
+        <result property="status" column="status"/>
+        <result property="seq" column="seq"/>
+        <result property="lastUpdateTime" column="lastUpdateTime"/>
+        <result property="lastUpdateBy" column="lastUpdateBy"/>
+    </resultMap>
+
+
+    <!--通用查询-->
+    <select id="select" resultMap="CategoryMap">
+        select
+        a.*,ifnull(b.name,"一级目录") as parentName
+        from category a left join category b on a.parentId = b.id
+        <where>
+            <if test="id != null and id != ''">
+                and a.id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and a.name like concat('%',#{name},'%')
+            </if>
+            <if test="parentId != null ">
+                and a.parentId = #{parentId}
+            </if>
+            <if test="status != null and status != ''">
+                and a.status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!--新增数据-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into category(id, name, parentId, img, status, seq, lastUpdateBy)
+        values (#{id}, #{name}, #{parentId}, #{img}, #{status}, #{seq}, #{lastUpdateBy})
+    </insert>
+
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into category(id,name,parentId,img,status,seq,lastUpdateBy)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.id},#{entity.name},#{entity.parentId},#{entity.img},#{entity.status},#{entity.seq},#{entity.lastUpdateBy})
+        </foreach>
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update">
+        update category
+        <set>
+            <if test="id != null and id != ''">
+                id = #{id},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="parentId != null and parentId != ''">
+                parentId = #{parentId},
+            </if>
+            <if test="img != null and img != ''">
+                img = #{img},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="seq != null and seq != ''">
+                seq = #{seq},
+            </if>
+            <if test="lastUpdateBy != null and lastUpdateBy != ''">
+                lastUpdateBy = #{lastUpdateBy},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键软删除-->
+    <update id="delete">
+        update category
+        set status = 120
+        where id = #{id}
+    </update>
+</mapper>
